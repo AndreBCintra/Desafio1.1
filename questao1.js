@@ -36,6 +36,8 @@ class Vertice {
     }
 }
 
+module.exports = Vertice
+/*
 // Entrada dos dados
 const prompt = require('prompt-sync') ();
 var x1 = prompt("Coordenada x do vertice 1: ");
@@ -65,4 +67,4 @@ v2.move(10, 10)
 console.log("ponto v2 movido para x = 10 e y = 10")
 console.log(`O ponto v1 é igual ao ponto v2? ${v1.equals(v2)}`)
 console.log("distancia de v1 pra v2 = " + v1.distancia(v2))
-console.log("distancia de v1 pra v3 = " + v1.distancia(v3))
+console.log("distancia de v1 pra v3 = " + v1.distancia(v3))*/
