@@ -1,34 +1,37 @@
 const Vertice = require('./questao1');
 
 class Poligono {
+
+    #vertices;
+    // Resolvi criar um array com os n vertices do poligono, onde o vertice i possue uma aresta com o vertice i + 1 e o vertice n uma aresta com o vertice 0
     constructor(Vertices){
         if (Vertices.length < 3){
             throw "Menos que 3 vertices";
         }
-        this.vertices = Vertices;
+        this.#vertices = Vertices;
     }
 
     addVertice(v) {
-        for (let i in this.vertices){
-            if (this.vertices[i].equals(v)){
+        for (let i in this.#vertices){
+            if (this.#vertices[i].equals(v)){
                 return false;
             }
         }
-        this.vertices.push(v);
+        this.#vertices.push(v);
         return true;
     }
 
     get perimetro(){
         let perimetro = 0;
-        for (let i = 0; i < this.vertices.length - 1; i++){
-            perimetro += this.vertices[i].distancia(this.vertices[i+1]);
+        for (let i = 0; i < this.#vertices.length - 1; i++){
+            perimetro += this.#vertices[i].distancia(this.#vertices[i+1]);
         }
-        perimetro += this.vertices[this.vertices.length - 1].distancia(this.vertices[0]);
+        perimetro += this.#vertices[this.#vertices.length - 1].distancia(this.#vertices[0]);
         return perimetro;
     }
 
     get qtdVertices(){
-        let qtd = this.vertices.length;
+        let qtd = this.#vertices.length;
         return qtd;
     }
 }
