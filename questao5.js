@@ -163,6 +163,10 @@ class Cliente {
     }
 
     setDependentes(dependentes){
+        if(isNaN(dependentes)){
+            console.log("Digite um valor númerico entre 0 e 10");
+            return false;
+        }
         if (dependentes > 10 || dependentes < 0) {
             console.log("Número de dependentes inválido");
             return false;

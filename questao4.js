@@ -8,11 +8,11 @@ class Aluno{
 
     lancarNota(nota, prova){
         if (prova == 1){
-            this.P1 = parseInt(nota);
+            this.P1 = parseFloat(nota);
             return true;
         }
         if (prova == 2){
-            this.P2 = parseInt(nota);
+            this.P2 = parseFloat(nota);
             return true;
         }
         return false;
