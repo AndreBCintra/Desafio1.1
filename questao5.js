@@ -183,7 +183,9 @@ class Cliente {
     }
 }
 
-let c1 = new Cliente();
+module.exports = Cliente
+
+/*let c1 = new Cliente();
 
 const prompt = require('prompt-sync') ();
 
@@ -223,4 +225,4 @@ while (!dependentesAdded) {
     dependentesAdded = c1.setDependentes(dependentes);
 }
 
-c1.imprime();
+c1.imprime();*/

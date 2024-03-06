@@ -36,7 +36,9 @@ class Poligono {
     }
 }
 
-const prompt = require('prompt-sync') ();
+module.exports = Poligono
+
+/*const prompt = require('prompt-sync') ();
 var entrada = prompt("Entre uma série de coordenadas x e y dos vertices: ");
 
 let vertices = [];
@@ -51,3 +53,4 @@ console.log(`A quantidade de vertices do poligono é ${p.qtdVertices}`);
 console.log(`O vertice (3, 8) foi adicionado? ${p.addVertice(new Vertice(3, 8))}`);
 console.log(`O perimetro do poligono é: ${p.perimetro}`);
 console.log(`A quantidade de vertices do poligono é ${p.qtdVertices}`);
+*/

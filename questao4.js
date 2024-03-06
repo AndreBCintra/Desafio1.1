@@ -8,11 +8,11 @@ class Aluno{
 
     lancarNota(nota, prova){
         if (prova == 1){
-            this.P1 = nota;
+            this.P1 = parseInt(nota);
             return true;
         }
         if (prova == 2){
-            this.P2 = nota;
+            this.P2 = parseInt(nota);
             return true;
         }
         return false;
@@ -103,7 +103,9 @@ class Turma{
     }
 }
 
-let Turma5 = new Turma();
+module.exports = {Aluno, Turma}
+
+/*let Turma5 = new Turma();
 let Ana = new Aluno(12345, "Ana de Almeida");
 let Bruno = new Aluno(23456, "Bruno Carvalho");
 let Fernanda = new Aluno(34567, "Fernanda Abreu");
@@ -123,4 +125,4 @@ Turma5.imprimeRelatorio();
 
 Turma5.remAluno(Bruno.matricula);
 
-Turma5.imprimeRelatorio();
+Turma5.imprimeRelatorio();*/

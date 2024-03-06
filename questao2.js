@@ -52,8 +52,10 @@ class Triangulo {
         }
     }
 
-    clone(){
-        return this;
+    clone(original){
+        this.#v1.move(original.#v1.getx, original.#v1.gety);
+        this.#v2.move(original.#v2.getx, original.#v2.gety);
+        this.#v3.move(original.#v3.getx, original.#v3.gety);
     }
 
     get area(){
@@ -66,6 +68,8 @@ class Triangulo {
     }
 }
 
+module.exports = Triangulo
+/*
 // Entrada dos dados
 
 // Entrada das coordenadas dos vertices do triangulo 1
@@ -118,4 +122,4 @@ console.log(`O perimetro do triangulo é = ${t1.perimetro}`);
 console.log(`O triangulo é um triangulo ${t1.tipo()}`);
 console.log(`A área do triangulo = ${t1.area}`);
 console.log(`O triangulo t1 é igual ao t4? ${t1.equals(t4)}`);
-console.log(`O triangulo t2 é igual ao t3? ${t2.equals(t3)}`);
+console.log(`O triangulo t2 é igual ao t3? ${t2.equals(t3)}`);*/
