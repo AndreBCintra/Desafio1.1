@@ -19,8 +19,16 @@ class Triangulo {
     }
 
     equals(t){
-        if (this.#v1.equals(t.#v1) && this.#v2.equals(t.#v2) && this.#v3.equals(t.#v3)){
-
+        if (this.#v1.equals(t.#v1) && this.#v2.equals(t.#v2) && this.#v3.equals(t.#v3) ||
+            this.#v1.equals(t.#v1) && this.#v2.equals(t.#v3) && this.#v3.equals(t.#v2) ||
+            this.#v1.equals(t.#v2) && this.#v2.equals(t.#v1) && this.#v3.equals(t.#v3) ||
+            this.#v1.equals(t.#v2) && this.#v2.equals(t.#v3) && this.#v3.equals(t.#v1) ||
+            this.#v1.equals(t.#v3) && this.#v2.equals(t.#v1) && this.#v3.equals(t.#v2) ||
+            this.#v1.equals(t.#v3) && this.#v2.equals(t.#v2) && this.#v3.equals(t.#v1)){
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -59,6 +67,8 @@ class Triangulo {
 }
 
 // Entrada dos dados
+
+// Entrada das coordenadas dos vertices do triangulo 1
 const prompt = require('prompt-sync') ();
 var t1x1 = prompt("Coordenada x do vertice 1: ");
 var t1y1 = prompt("Coordenada y do vertice 1: ");
@@ -66,41 +76,46 @@ var t1x2 = prompt("Coordenada x do vertice 2: ");
 var t1y2 = prompt("Coordenada y do vertice 2: ");
 var t1x3 = prompt("Coordenada x do vertice 3: ");
 var t1y3 = prompt("Coordenada y do vertice 3: ");
+// Criacao dos vertices do triangulo 1
+let t1v1 = new Vertice(t1x1, t1y1);
+let t1v2 = new Vertice(t1x2, t1y2);
+let t1v3 = new Vertice(t1x3, t1y3);
+// Criacao do triangulo 1
+let t1 = new Triangulo(t1v1, t1v2, t1v3);
 
+// Entrada das coordenadas dos vertices do triangulo 2
 var t2x1 = prompt("Coordenada x do vertice 1: ");
 var t2y1 = prompt("Coordenada y do vertice 1: ");
 var t2x2 = prompt("Coordenada x do vertice 2: ");
 var t2y2 = prompt("Coordenada y do vertice 2: ");
 var t2x3 = prompt("Coordenada x do vertice 3: ");
 var t2y3 = prompt("Coordenada y do vertice 3: ");
+// Criacao dos vertices do triangulo 2
+let t2v1 = new Vertice(t2x1, t2y1);
+let t2v2 = new Vertice(t2x2, t2y2);
+let t2v3 = new Vertice(t2x3, t2y3);
+// Criacao do triangulo 2
+let t2 = new Triangulo(t2v1, t2v2, t2v3);
 
+// Entrada das coordenadas dos vertices do triangulo 3
 var t3x1 = prompt("Coordenada x do vertice 1: ");
 var t3y1 = prompt("Coordenada y do vertice 1: ");
 var t3x2 = prompt("Coordenada x do vertice 2: ");
 var t3y2 = prompt("Coordenada y do vertice 2: ");
 var t3x3 = prompt("Coordenada x do vertice 3: ");
 var t3y3 = prompt("Coordenada y do vertice 3: ");
-
-// Criacao dos vertices
-let t1v1 = new Vertice(t1x1, t1y1);
-let t1v2 = new Vertice(t1x2, t1y2);
-let t1v3 = new Vertice(t1x3, t1y3);
-
-let t2v1 = new Vertice(t2x1, t2y1);
-let t2v2 = new Vertice(t2x2, t2y2);
-let t2v3 = new Vertice(t2x3, t2y3);
-
+// Criacao dos vertices do triangulo 3
 let t3v1 = new Vertice(t3x1, t3y1);
 let t3v2 = new Vertice(t3x2, t3y2);
 let t3v3 = new Vertice(t3x3, t3y3);
-
-// Criacao do triangulo
-let t1 = new Triangulo(t1v1, t1v2, t1v3);
-let t2 = new Triangulo(t3v1, t2v2, t2v3);
+// Criacao do triangulo 3
 let t3 = new Triangulo(t3v1, t3v2, t3v3);
+
 let t4 = t1.clone();
 
 // Testando os métodos da classe
 console.log(`O perimetro do triangulo é = ${t1.perimetro}`);
 console.log(`O triangulo é um triangulo ${t1.tipo()}`);
 console.log(`A área do triangulo = ${t1.area}`);
+console.log(`O triangulo t1 é igual ao t4? ${t1.equals(t4)}`);
+console.log(`O triangulo t2 é igual ao t3? ${t2.equals(t3)}`);
