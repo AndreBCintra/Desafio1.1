@@ -4,10 +4,11 @@ class ListaPacientes{
     constructor(){}
 
     addPaciente(paciente){
-        if (!this.verificaPacientePorCpf(paciente.cpf)){
+        if (!this.verificaPacientePorCpf(paciente.cpf) && paciente.cpf != ""){
             console.log("\nErro: CPF já cadastrado\n");
             return false;
         }
+        console.log("\nPaciente cadastrado com sucesso!");
         this.#pacientes.push(paciente);
         return true;
     }
@@ -20,6 +21,7 @@ class ListaPacientes{
         for (let i in this.#pacientes){
             if (this.#pacientes[i].cpf == cpf){
                 this.#pacientes.splice(i, 1);
+                console.log("Paciente excluido com sucesso!");
                 return true;
             }
         }
@@ -35,8 +37,6 @@ class ListaPacientes{
                 this.#pacientes = this.#pacientes.sort((a, b) => {
                     let aUpper = a.nome.toUpperCase();
                     let bUpper = b.nome.toUpperCase();
-                    console.log(aUpper)
-                    console.log(bUpper)
                     if (aUpper < bUpper){
                         return -1;
                     }
