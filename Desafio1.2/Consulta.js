@@ -46,7 +46,8 @@ class Consulta{
         let hoje = new Date();
         let dataSeparada = data.split("/");
         let dataNova = new Date(dataSeparada[2], dataSeparada[1] - 1, dataSeparada[0]);
-        if (dataNova < hoje){
+        let dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDay());
+        if (dataNova < dataHoje){
             console.log("\nErro: data agendada já passou\n");
             return false;
         }
@@ -72,11 +73,12 @@ class Consulta{
         let horas = parseInt(horaSeparada[0])*10 + parseInt(horaSeparada[1]);
         let minutos = parseInt(horaSeparada[2])*10 + parseInt(horaSeparada[3]);
         let dia = parseInt(dataSeparada[0]);
-        let mes = parseInt(dataSeparada[1]);
+        let mes = parseInt(dataSeparada[1]-1);
         let ano = parseInt(dataSeparada[2]);
         let dataDaConsulta = new Date(ano, mes, dia, horas, minutos);
         if (dataDaConsulta < hoje){
             console.log("\nErro: hora agendada já passou\n");
+            return false;
         }
         if (minutos % 15 != 0){
             console.log("\nErro: a consulta deve ocorrer a cada 15 minutos\n");

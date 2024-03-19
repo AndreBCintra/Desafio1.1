@@ -67,6 +67,7 @@ class InterfaceGrafica {
 
         let cpf = prompt("CPF: ");
         while (!P.setCpf(cpf) || !(this.listaPaciente.verificaPacientePorCpf(cpf))){
+            if (!this.listaPaciente.verificaPacientePorCpf(cpf)){   console.log("Erro: CPF já cadastrado"); }
             if (cpf == "exit"){ return false;   }
             cpf = prompt("CPF: ");
         }
@@ -84,7 +85,6 @@ class InterfaceGrafica {
         }
 
         this.listaPaciente.addPaciente(P);
-        console.log("\nPaciente cadastrado com sucesso!");
     }
 
     excluirPaciente(){
@@ -320,7 +320,7 @@ class InterfaceGrafica {
                 linhaConsulta = linhaConsulta.concat(lista[i].data).concat(" ");
             }
             dataAnterior = lista[i].data;
-            linhaConsulta = linhaConsulta.concat(this.#formataHora(lista[i].horaI)).concat(" ").concat(lista[i].horaF).concat(" ");
+            linhaConsulta = linhaConsulta.concat(this.#formataHora(lista[i].horaI)).concat(" ").concat(this.#formataHora(lista[i].horaF)).concat(" ");
             linhaConsulta = linhaConsulta.concat(this.#calculaDuracao(lista[i].horaI, lista[i].horaF)).concat(" ");
             let PAtual = this.listaPaciente.getPaciente(lista[i].cpf);
             let nomeAtual = PAtual.nome;
