@@ -31,9 +31,8 @@ class Consulta{
         let horaSeparada = this.#horaFinal.split("");
         let horas = parseInt(horaSeparada[0])*10 + parseInt(horaSeparada[1]);
         let minutos = parseInt(horaSeparada[2])*10 + parseInt(horaSeparada[3]);
-        let data = new Date(dataSeparada[2], dataSeparada[1], dataSeparada[0], horas, minutos);
+        let data = new Date(dataSeparada[2], dataSeparada[1]-1, dataSeparada[0], horas, minutos);
         if (data < hoje){
-            console.log("eita");
             this.#futura = false;
         }
     }

@@ -62,24 +62,24 @@ class InterfaceGrafica {
         }
     }
 
-    cadastrarPaciente(){
+    cadastrarPaciente(){ // Funcionalidade 1
         let P = new Paciente();
 
         let cpf = prompt("CPF: ");
-        while (!P.setCpf(cpf) || !(this.listaPaciente.verificaPacientePorCpf(cpf))){
+        while (!P.setCpf(cpf) || !(this.listaPaciente.verificaPacientePorCpf(cpf))){ // Funcionalidade 1.a, 1.d e 1.e
             if (!this.listaPaciente.verificaPacientePorCpf(cpf)){   console.log("Erro: CPF já cadastrado"); }
             if (cpf == "exit"){ return false;   }
             cpf = prompt("CPF: ");
         }
 
-        let nome = prompt("Nome: ");
-        while (!P.setNome(nome)){
+        let nome = prompt("Nome: "); 
+        while (!P.setNome(nome)){ // Funcionalidade 1.b e 1.d
             if (nome == "exit"){    return false;   }
             nome = prompt("Nome: ");
         }
 
         let dataNasc = prompt("Data de nascimento: ");
-        while (!P.setDataNasc(dataNasc)){
+        while (!P.setDataNasc(dataNasc)){ // Funcionalidade 1.c, 1.d e 1.f
             if (dataNasc == "exit"){    return false;   }
             dataNasc = prompt("Data de nascimento: ");
         }
@@ -87,11 +87,15 @@ class InterfaceGrafica {
         this.listaPaciente.addPaciente(P);
     }
 
-    excluirPaciente(){
+    excluirPaciente(){ // Funcionalidade 2
         let cpf = prompt("CPF: ");
         if (cpf == "exit"){ return false;   }
+        if (this.listaConsulta.encontraConsultaValida(cpf)){ // Funcionalidade 2.a
+            console.log("\nErro: paciente está agendado\n");
+            return false;
+        }
         this.listaPaciente.remPaciente(cpf);
-        this.listaConsulta.excluiPaciente(cpf);
+        this.listaConsulta.excluiPaciente(cpf); // Funcionalidade 2.b
     }
 
     listarPacientes(caso){
@@ -99,7 +103,7 @@ class InterfaceGrafica {
             console.log("\nErro: nenhum paciente cadastrado\n");
             return false;
         }
-        this.listaPaciente.sort(caso);
+        this.listaPaciente.sort(caso); // Funcionalidade 5.a (ordenação)
         let maiorNome = this.listaPaciente.getPacientePorPosicao(0).nome;
         for (let i = 0; i < this.listaPaciente.length; i++){
             let PAtual = this.listaPaciente.getPacientePorPosicao(i);
@@ -132,8 +136,9 @@ class InterfaceGrafica {
             linhaPaciente = linhaPaciente.concat("   ");
             linhaPaciente = linhaPaciente.concat(PAtual.idade(PAtual.dataNasc));
             console.log(linhaPaciente);
+
             let k = this.listaConsulta.encontraConsultaValida(PAtual.cpf);
-            if (k){
+            if (k){ // Funcionalidade 5.b
                 let linhaConsulta1 = "            Agendado para: ";
                 linhaConsulta1 = linhaConsulta1.concat(this.listaConsulta.getConsultaNaPosicaoI(k-1).data);
                 console.log(linhaConsulta1);
@@ -178,36 +183,36 @@ class InterfaceGrafica {
         }
     }
 
-    agendarConsulta(){
+    agendarConsulta(){ // Funcionalidade 3
         let C = new Consulta();
         let cpf = prompt("CPF: ");
 
-        while (this.listaPaciente.verificaPacientePorCpf(cpf)){
+        while (this.listaPaciente.verificaPacientePorCpf(cpf)){ // Funcionalidade 3.a
             console.log("\nErro: paciente não cadastrado\n");
             if (cpf == "exit"){ return false;   }
             cpf = prompt("CPF: ");
         }
-        while (!this.listaConsulta.verificaConsultaNoCpf(cpf)){
+        while (!this.listaConsulta.verificaConsultaNoCpf(cpf)){ // Funcionalidade 3.f
             cpf = prompt("CPF: ");
             if (cpf == "exit"){ return false;   }
         }
         C.setCpf(cpf);
 
-        let data = prompt("Data da consulta: ");
+        let data = prompt("Data da consulta: "); 
         if (data == "exit"){    return false;   }
-        while (!C.setData(data)){
+        while (!C.setData(data)){ // Funcionalidade 3.b e 3.d
             data = prompt("Data da consulta: ");
             if (data == "exit"){    return false;   }
         }
 
-        let horaI = prompt("Hora inicial: ");
+        let horaI = prompt("Hora inicial: "); // Funcionalidade 3.c, 3.h e 3.i
         if (horaI == "exit"){   return false;   }
         while (!C.setHoraInicial(horaI)){
             horaI = prompt("Hora inicial: ");
             if (horaI == "exit"){   return false;   }
         }
 
-        let horaF = prompt("Hora final: ");
+        let horaF = prompt("Hora final: "); // Funcionalidade 3.c, 3.e, 3.g, 3.h e 3.i
         if (horaF == "exit"){   return false;   }
         while (!C.setHoraFinal(horaF)){
             horaF = prompt("Hora final: ");
@@ -218,7 +223,7 @@ class InterfaceGrafica {
         return true;
     }
     
-    cancelarAgendamento(){
+    cancelarAgendamento(){ // Funcionalidade 4
         let cpf = prompt("CPF: ");
         if (cpf == "exit"){ return false;   }
         while (this.listaPaciente.verificaPacientePorCpf(cpf)){
@@ -229,7 +234,7 @@ class InterfaceGrafica {
         let data = prompt("Data da consulta: ");
         if (data == "exit"){    return false;   }
         while (!this.#validaData(data)){
-            data = prompt("Data de nascimento: ");
+            data = prompt("Data da consulta: ");
             if (data == "exit"){    return false;   }
         }
 
@@ -240,7 +245,7 @@ class InterfaceGrafica {
             if (horaI == "exit"){   return false;   }
         }
 
-        if (this.listaConsulta.cancelarAgendamento(cpf, data, horaI)){
+        if (this.listaConsulta.cancelarAgendamento(cpf, data, horaI)){ // Funcionalidade 4.a
             console.log("\nAgendamento cancelado com sucesso!\n");
             return true;
         }
@@ -266,13 +271,18 @@ class InterfaceGrafica {
     }
 
     listarAgenda(){
+        if (this.listaConsulta.length == 0){
+            console.log("Erro: não há consultas");
+            return false;
+        }
         let caso = prompt("Apresentar a agenda T-Toda ou P-Periodo: ");
         while (caso != "T" && caso != "P"){
             console.log("\nErro: escolha entre T ou P\n");
             caso = prompt("Apresentar a agenda T-Toda ou P-Período");
         }
         let lista = [];
-        switch(caso){
+        this.listaConsulta.sort(); // Funcionalidade 6.a (ordenação)
+        switch(caso){ // Funcionalidade 6.b
             case 'P':
                 let dataI = prompt("Data inicial: ");
                 while (!this.#validaData(dataI)){
@@ -282,11 +292,9 @@ class InterfaceGrafica {
                 while (!this.#validaData(dataF)){
                     let dataF = prompt("Data final: ");
                 }
-                this.listaConsulta.sort();
                 lista = this.listaConsulta.filtra(dataI, dataF);
                 break;
             case 'T':
-                this.listaConsulta.sort();
                 lista = this.listaConsulta.listaDeConsultas;
                 break;
         }
