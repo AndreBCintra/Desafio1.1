@@ -170,7 +170,7 @@ class Validador {
 
     #validaEstadoCivil(c){
         let estado_civil = c.estado_civil;
-        if (estado_civil == "C" || estado_civil == "c" || estado_civil == "D" || estado_civil == "d" || estado_civil == "S" || estado_civil == "s" || estado_civil == "V" || estado_civil == "v"){
+        if (estado_civil == "C" || estado_civil == "c" || estado_civil == "D" || estado_civil == "d" || estado_civil == "S" || estado_civil == "s" || estado_civil == "V" || estado_civil == "v" || estado_civil == ""){
             return false;
         }
         else{
