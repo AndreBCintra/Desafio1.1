@@ -11,8 +11,9 @@ class Leitor {
 
     ler(){
         var data;
+        const args = process.argv.slice(2);
         try {
-            data = fs.readFileSync('./clientes.json', 'utf8');
+            data = fs.readFileSync(args[0], 'utf8');
         } catch (err) {
             console.error(err);
             return false;
