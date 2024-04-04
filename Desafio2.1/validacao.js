@@ -134,13 +134,13 @@ class Validador {
             return "Data de nascimento deve ser no formato DDMMAAAA";
         }
         let data = {
-            dia: dataSeparada[0] * 10 + dataSeparada[1],
-            mes: dataSeparada[2] * 10 + dataSeparada[3],
-            ano: dataSeparada[4] * 1000 + dataSeparada[5] * 100 + dataSeparada[6] * 10 + dataSeparada[7]
+            dia: parseInt(dataSeparada[0] * 10) + parseInt(dataSeparada[1]),
+            mes: parseInt(dataSeparada[2] * 10) + parseInt(dataSeparada[3]),
+            ano: parseInt(dataSeparada[4] * 1000) + parseInt(dataSeparada[5] * 100) + parseInt(dataSeparada[6] * 10) + parseInt(dataSeparada[7])
         }
-        let dia = parseInt(data.dia);
-        let mes = parseInt(data.mes);
-        let ano = parseInt(data.ano);
+        let dia = data.dia;
+        let mes = data.mes;
+        let ano = data.ano;
         let diaPorMes = [ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         if (ano % 400 === 0 || ano % 4 === 0 && ano % 100 !== 0) {
             diaPorMes[2] = 29;
@@ -193,12 +193,9 @@ class Gerador {
 
     escrever(ListaDeClientes, ListaDeErros){
         let mensagem = [];
-        console.log(ListaDeClientes.size);
         for (let i = 0; i < ListaDeClientes.size; i++){
             let ccce = new ClienteConcatenadoComErro(ListaDeClientes.clienteNaPos(i), ListaDeErros.erroNaPos(i));
             mensagem.push(ccce);
-            console.log(JSON.stringify(ListaDeErros.erroNaPos(i)));
-            console.log(JSON.stringify(ccce));
         }
         let jsonFinal = JSON.stringify(mensagem, null, 2);
         fs.writeFile('./saida.json', jsonFinal, err => {
@@ -237,7 +234,7 @@ class Erros {
         if (label == "nome"){
             this.nome = mensagemDeErro;
         }
-        if (label == "cpf"){
+        if (label == "CPF"){
             this.cpf = mensagemDeErro;
         }
         if (label == "dt_nascimento"){
@@ -285,8 +282,8 @@ class LinhaDeProducao {
         let data = this.#l.data;
         this.#listaClientes = new ListaDeClientes(data);
         this.#listaErros = new ListaDeErros();
-        for (let i in this.#listaClientes){
-            let erro = this.#v.validaCliente();
+        for (let i = 0; i < this.#listaClientes.size; i++){
+            let erro = this.#v.validaCliente(this.#listaClientes.clienteNaPos(i));
             this.#listaErros.add(erro);
         }
         this.#g.escrever(this.#listaClientes, this.#listaErros);
