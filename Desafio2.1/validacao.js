@@ -179,12 +179,12 @@ class Validador {
 }
 
 class ClienteConcatenadoComErro {
-    #cliente;
-    #erro;
+    cliente;
+    erro;
 
     constructor(cliente, erro){
-        this.#cliente = cliente;
-        this.#erro = erro;
+        this.cliente = cliente;
+        this.erro = erro;
     }
 }
 
@@ -192,14 +192,15 @@ class Gerador {
     constructor(){    }
 
     escrever(ListaDeClientes, ListaDeErros){
-        let jsonFinal = "";
+        let mensagem = [];
         console.log(ListaDeClientes.size);
         for (let i = 0; i < ListaDeClientes.size; i++){
-            let cce = new ClienteConcatenadoComErro(ListaDeClientes.clienteNaPos(i), ListaDeErros.erroNaPos(i));
-            let cliente = new Cliente("Ana Banana", "06120416382", "05122000", "500,00", "S");
-            console.log(JSON.stringify(cliente));
-            jsonFinal = jsonFinal.concat(JSON.stringify(cce));
+            let ccce = new ClienteConcatenadoComErro(ListaDeClientes.clienteNaPos(i), ListaDeErros.erroNaPos(i));
+            mensagem.push(ccce);
+            console.log(JSON.stringify(ListaDeErros.erroNaPos(i)));
+            console.log(JSON.stringify(ccce));
         }
+        let jsonFinal = JSON.stringify(mensagem, null, 2);
         fs.writeFile('./saida.json', jsonFinal, err => {
             if (err) {
                 console.error(err);
@@ -261,6 +262,9 @@ class ListaDeErros {
     erroNaPos(i){
         return this.#lista[i];
     }
+    getLista(){
+        return this.#lista;
+    }
 }
 
 class LinhaDeProducao {
@@ -296,18 +300,18 @@ class Cliente {
     #renda_mensal;
     #estado_civil;
 
-    get nome(){             return this.#nome;          }
-    get cpf(){              return this.#cpf;           }
-    get dt_nascimento(){    return this.#dt_nascimento;  }
-    get renda_mensal(){     return this.#renda_mensal;  }
-    get estado_civil(){     return this.#estado_civil;  }
+    getNome(){             return this.#nome;          }
+    getCpf(){              return this.#cpf;           }
+    getDt_nascimento(){    return this.#dt_nascimento;  }
+    getRenda_mensal(){     return this.#renda_mensal;  }
+    getEstado_civil(){     return this.#estado_civil;  }
 
     constructor(nome, cpf, dt_nascimento, renda_mensal, estado_civil){
-        this.#nome = nome;
-        this.#cpf = cpf;
-        this.#dt_nascimento = dt_nascimento;
-        this.#renda_mensal = renda_mensal;
-        this.#estado_civil = estado_civil;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dt_nascimento = dt_nascimento;
+        this.renda_mensal = renda_mensal;
+        this.estado_civil = estado_civil;
     }
 }
 
