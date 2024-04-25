@@ -1,8 +1,6 @@
-import promptSync from 'prompt-sync';
+const prompt = require('prompt-sync') ();
 
-const prompt = promptSync();
-
-export default class Entrada {
+class Entrada {
     constructor(){}
 
     mostrarMenuPrincipal(){
@@ -34,3 +32,5 @@ export default class Entrada {
         return resposta;
     }
 }
+
+module.exports = Entrada;

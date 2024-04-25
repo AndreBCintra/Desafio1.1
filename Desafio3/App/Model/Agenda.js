@@ -1,6 +1,6 @@
-import Consulta from "./Consulta.js";
+const Consulta = require("./Consulta.js");
 
-export default class Agenda {
+class Agenda {
     #consultas = [];
 
     constructor(){}
@@ -62,6 +62,10 @@ export default class Agenda {
         return false;
     }
 
+    getConsultaNaPosicaoI(i){
+        return this.#consultas[i];
+    }
+
     sort(){
         this.#consultas.sort((a, b) => {
             let dataASeparada = a.data.split("/");
@@ -98,3 +102,5 @@ export default class Agenda {
         });
     }
 }
+
+module.exports = Agenda;

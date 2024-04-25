@@ -1,6 +1,6 @@
-import Paciente from "../Model/Paciente.js";
+const Paciente = require("../Model/Paciente.js");
 
-export default class ListaDePacientes {
+class ListaDePacientes {
     #pacientes = [];
 
     constructor(){}
@@ -37,6 +37,14 @@ export default class ListaDePacientes {
         return this.#pacientes[pos];
     }
 
+    getPacientePorCpf(cpf){
+        for (let i in this.#pacientes){
+            if (this.#pacientes[i].cpf == cpf){
+                return this.#pacientes[i];
+            }
+        }
+    }
+
     sort(caso){
         switch(caso){
             case '1':
@@ -58,3 +66,5 @@ export default class ListaDePacientes {
         }
     } 
 }
+
+module.exports = ListaDePacientes;

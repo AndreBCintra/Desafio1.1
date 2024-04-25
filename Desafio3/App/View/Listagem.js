@@ -1,4 +1,4 @@
-export default class Listagem {
+class Listagem {
     constructor(){}
 
     exibirMensagem(mensagem){
@@ -100,10 +100,10 @@ export default class Listagem {
             dataAnterior = lista[i].data;
             linhaConsulta = linhaConsulta.concat(this.#formataHora(lista[i].horaI)).concat(" ").concat(this.#formataHora(lista[i].horaF)).concat(" ");
             linhaConsulta = linhaConsulta.concat(this.#calculaDuracao(lista[i].horaI, lista[i].horaF)).concat(" ");
-            let PAtual = listaDePacientes.getPaciente(lista[i].cpf);
+            let PAtual = listaDePacientes.getPacientePorCpf(lista[i].cpf);
             let nomeAtual = PAtual.nome;
             linhaConsulta = linhaConsulta.concat(nomeAtual).concat(" ");
-            let dtNascAtual = PAtual.dataNasc;
+            let dtNascAtual = PAtual.data;
             linhaConsulta = linhaConsulta.concat(dtNascAtual);
             console.log(linhaConsulta);
         }
@@ -135,3 +135,5 @@ export default class Listagem {
         return duracaoFormatada;
     }
 }
+
+module.exports = Listagem;

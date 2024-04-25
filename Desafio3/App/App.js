@@ -1,12 +1,12 @@
-import Controller from './Controller/Controller.js';
-import Entrada from './View/entrada.js';
-import Listagem from './View/listagem.js';
-import Agenda from './Model/Agenda.js';
-import ListaDePacientes from './Model/ListaDePacientes.js';
-import Validador from './Model/Validador.js';
-import Erros from './View/Erros.js'
+const Controller = require('./Controller/Controller.js');
+const Entrada = require('./View/entrada.js');
+const Listagem = require('./View/listagem.js');
+const Agenda = require('./Model/Agenda.js');
+const ListaDePacientes = require('./Model/ListaDePacientes.js');
+const Validador = require('./Model/Validador.js');
+const Erros = require('./View/Erros.js');
 
-export default class App {
+class App {
     constructor(){};
 
     init(){
@@ -20,3 +20,5 @@ export default class App {
         C.initMenuPrincipal();
     }
 }
+
+module.exports = App;

@@ -1,4 +1,4 @@
-export default class Controller {
+class Controller {
     E;
     L;
     A;
@@ -99,7 +99,7 @@ export default class Controller {
                             }
                             let dataF = this.E.ask("Data final: ");
                             let dataFValida = this.V.validaFormatoData(dataF);
-                            while (!this.V.validaFormatoData(dataF)){
+                            while (dataFValida){
                                 this.Er.printErro(dataFValida);
                                 dataF = this.E.ask("Data final: ");
                             }
@@ -215,8 +215,8 @@ export default class Controller {
             horaFinalValida = this.V.validaHoraFinal(horaFinal, horaInicial);
         }
 
-        this.A.adicionarConsulta()
-        this.L.exibirMensagem("\nConsulta agendada com sucesso!\n")
+        this.A.adicionarConsulta(CPF, data, horaInicial, horaFinal);
+        this.L.exibirMensagem("\nConsulta agendada com sucesso!\n");
     }
 
     cancelarAgendamento(){
@@ -256,3 +256,5 @@ export default class Controller {
         }
     }
 }
+
+module.exports = Controller;

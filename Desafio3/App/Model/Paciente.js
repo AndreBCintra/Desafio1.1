@@ -1,4 +1,4 @@
-export default class Paciente {
+class Paciente {
     cpf;
     nome;
     data;
@@ -28,3 +28,5 @@ export default class Paciente {
         return idade;
     }
 }
+
+module.exports = Paciente;

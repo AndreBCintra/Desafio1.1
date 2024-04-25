@@ -1,4 +1,4 @@
-export default class Consulta {
+class Consulta {
     #cpf;
     #data;
     #horaFinal;
@@ -41,3 +41,5 @@ export default class Consulta {
         }
     }
 }
+
+module.exports = Consulta;

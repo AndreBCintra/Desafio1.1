@@ -1,4 +1,4 @@
-export default class Validador {
+class Validador {
     constructor(){}
 
     validaCPF(cpf, LP){
@@ -211,3 +211,5 @@ export default class Validador {
         return false;
     }
 }
+
+module.exports = Validador;

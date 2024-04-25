@@ -1,16 +1,17 @@
 {
-  "name": "app",
+  "name": "desafio3",
   "version": "1.0.0",
   "description": "",
-  "main": "App.js",
-  "type": "module",
+  "main": "Consultorio.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Andre Cintra",
   "license": "ISC",
   "dependencies": {
-    "prompt-sync": "^4.2.0"
+    "mysql2": "^3.9.7",
+    "prompt-sync": "^4.2.0",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
   }
 }
