@@ -1,0 +1,483 @@
+Notas: 
+- Os três microsserviços (Ciclista, Equipamento e Serviços Externos) possuem integração entre si.
+
+
+UC01
+    UC01 - Cadastrar Ciclista (fluxo principal)
+        Passo 1 e 2:
+            [FRONT]/ciclista/existeEmail/{email} - GET (Microsserviço Aluguel)
+        Passo 3:
+            [BACK]/ciclista/existeEmail/{email} - GET [R3](Microsserviço Aluguel)
+        Passo 4 e 5:
+            [FRONT]/ciclista - POST (Microsserviço Aluguel)
+        Passo 6:
+            [BACK]/ciclista - POST [R1][R2](Microsserviço Aluguel)
+        Passo 7:
+            [BACK - /ciclista - POST]/validaCartaoDeCredito - POST (Microsserviço Externo)
+        Passo 8:
+            [BACK]/ciclista - POST (Microsserviço Aluguel)
+        Passo 9:
+            [BACK - /ciclista - POST]/enviarEmail - POST (Microsserviço Externo)
+        Passo 10:
+            [FRONT - /ciclista - POST]/enviarEmail - POST (Microsserviço Externo)
+    UC01 - Cadastrar Ciclista (fluxo alternativo A1)
+        Passo A1.1:
+            [FRONT - /ciclista/existeEmail/{email} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo A1.2:
+            Passo 1
+    UC01 - Cadastrar Ciclista (fluxo alternativo A2)
+        Passo A2.1:
+            [FRONT - /ciclista - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo A2.2:
+            Passo 4
+    UC01 - Cadastrar Ciclista (fluxo alternativo A3)
+        Passo A3.1:
+            [FRONT - /ciclista/validaCartaoDeCredito - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo A3.2:
+            Passo 4
+    UC01 - Cadastrar Ciclista (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+
+
+UC02
+    UC02 - Confirmar Email (fluxo principal)
+        Passo 1:
+            [BACK]/ciclista/{idCiclista} - GET (Microsserviço Aluguel)
+        Passo 2 e 3:
+            [BACK - /ciclista/{idCiclista} - GET]/ativar - POST (Microsserviço Aluguel)
+        Passo 4:
+            [FRONT - /ciclista/{idCiclista} - GET]/ativar - POST (Microsserviço Aluguel)
+    UC02 - Confirmar Email (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /ciclista/{idCiclista}/ativar - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+
+
+UC03
+    UC03 - Alugar bicicleta (fluxo principal)
+        Passo 1 a 3:
+            [FRONT]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+            [BACK]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+        Passo 4:
+            [BACK]/tranca/{idTranca}/bicicleta - GET (Microsserviço Equipamento)
+        Passo 5:
+            [BACK]/ciclista/{idCiclista}/permiteAluguel - GET [R1](Microsserviço Aluguel)
+            [BACK - /tranca/{idTranca}/bicicleta - GET]/{status} - GET [R5](Microsserviço Equipamento)
+        Passo 6 e 7:
+            [BACK - /ciclista/{idCiclista} - GET]/cobranca - POST [R2](Microsserviço Externo)
+        Passo 8 e 9:
+            [BACK - /tranca/{idTranca}/bicicleta - GET]/{idBicicleta}/status/{acao} - POST [R3](Microsserviço Equipamento)
+        Passo 10:
+            [BACK - /tranca/{idTranca} - GET]/destrancar - POST (Microsserviço Equipamento)
+        Passo 11 e 12:
+            [FRONT]/bicicleta/{idBicicleta} - GET [R4](Microsserviço Equipamento)
+        Passo 12:
+            [FRONT - /bicicleta/{idBicicleta} - GET]/{status} - GET (Microsserviço Equipamento)
+    UC03 - Alugar bicicleta (fluxo alternativo A1)
+        Passo A1.1:
+            [FRONT - /tranca/{idTranca} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo A1.2:
+            Passo 2
+    UC03 - Alugar bicicleta (fluxo de exceção E1)
+        Passo E1.1:
+            [BACK - /ciclista/{idCiclista}]/enviarEmail - POST (Microsserviço Externo)
+        Passo E1.2:
+            [FRONT - /ciclista/{idCiclista}/permiteAluguel - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.3:
+            Fim
+    UC03 - Alugar bicicleta (fluxo de exceção E2)
+        Passo E2.1:
+            [FRONT - /tranca/{idTranca}/bicicleta - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E2.2:
+            Fim
+    UC03 - Alugar bicicleta (fluxo de exceção E3)
+        Passo E3.1:
+            [FRONT - /ciclista/{idCiclista}/cobranca - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E3.2:
+            Fim
+    UC03 - Alugar bicicleta (fluxo de exceção E4)
+        Passo E4.1:
+            [FRONT - /tranca/{idTranca}/bicicleta/{status} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E4.2:
+            Fim
+    UC03 - Alugar bicicleta (fluxo de exceção E5)
+        Passo E5.1:
+            [FRONT - /tranca/{idTranca}/destrancar - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E5.2:
+            Fim
+
+
+UC04
+    UC04 – Devolver bicicleta (fluxo principal)
+        Passo 1 e 2:
+            [FRONT]/bicicleta/{idBicicleta} - GET (Microsserviço Equipamento)
+        Passo 3 e 4:
+            [BACK]/devolucao - POST [R1][R2](Microsserviço Aluguel)
+        Passo 5 e 6:
+            [BACK]/tranca/{idTranca}/trancar - POST (Microsserviço Equipamento)
+        Passo 7 e 8:
+            [FRONT]/devolucao - POST [R3](Microsserviço Aluguel)
+    UC04 – Devolver bicicleta (fluxo alternativo A1)
+        Passo A1.1 e A1.2:
+            [BACK]/cobranca - POST (Microsserviço Externo)
+        Passo A1.3:
+            Passo 4
+    UC04 – Devolver bicicleta (fluxo alternativo A2)
+        Passo A2.1:
+            [BACK]/filaCobranca - POST
+        Passo A2.2:
+            Passo 4
+    UC04 – Devolver bicicleta (fluxo alternativo A3)
+        Passo A3.1 a A3.3:
+            [FRONT]/bicicleta/{idBicicleta}/status/{acao} (Microsserviço Equipamento)
+            [BACK]/bicicleta/{idBicicleta}/status/{acao} (Microsserviço Equipamento)
+        Passo A3.4:
+            Fim
+    UC04 – Devolver bicicleta (fluxo alternativo A4)
+        Passo A4.1:
+            UC08, Passo 3
+    UC04 – Devolver bicicleta (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /bicicleta/{idBicicleta} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+
+
+UC06
+    UC06 – Alterar Dados do Ciclista (fluxo principal)
+        Passo 1 a 3:
+            [FRONT]/ciclista/{idCiclista} - PUT [R1][R2](Microsserviço Aluguel)
+            [BACK]/ciclista/{idCiclista} - PUT (Microsserviço Aluguel)
+        Passo 4:
+            [BACK - /ciclista/{idCiclista} - GET]/enviarEmail - POST (Microsserviço Externo)
+    UC06 – Alterar Dados do Ciclista (fluxo alternativo A1)
+        Passo A1.1:
+            [BACK - /ciclista]/{idCiclista} - PUT (Microsserviço Aluguel)
+        Passo A1.2:
+            Passo 3
+    UC06 – Alterar Dados do Ciclista (fluxo alternativo A2)
+        Passo A2.1:
+            [FRONT - /ciclista/{idCiclista} - PUT]/apresentarErro - POST (Microsserviço Externo)
+        Passo A2.2:
+            Passo 1
+    UC06 – Alterar Dados do Ciclista (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+
+
+UC07
+    UC07 – Alterar Cartão (fluxo principal)
+        Passo 1 e 2:
+            [FRONT]/cartaoDeCredito/{idCiclista} - PUT (Microsserviço Aluguel)
+        Passo 3:
+            [BACK - /cartaoDeCredito/{idCiclista} - PUT]/validaCartaoDeCredito - POST (Microsserviço Externo)
+        Passo 4:
+            [BACK]/cartaoDeCredito/{idCiclista} - PUT (Microsserviço Aluguel)
+        Passo 5:
+            [BACK - ciclista/{idCiclista} - GET]/enviarEmail - POST (Microsserviço Externo)
+    UC07 – Alterar Cartão (fluxo alternativo A1)
+        Passo A1.1:
+            [FRONT - /cartaoDeCredito/{idCiclista} - PUT]/apresentarErro (Microsserviço Externo)
+        Passo A1.2:
+            Passo 4
+    UC07 – Alterar Cartão (fluxo alternativo A2)
+        Passo A2.1:
+            [FRONT - /cartaoDeCredito/{idCiclista}/validaCartaoDeCredito - POST]/apresentarErro (Microsserviço Externo)
+        Passo A2.2:
+            Passo 4
+    UC07 – Alterar Cartão (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+
+
+UC08
+    UC08 – Incluir Bicicleta na Rede de Totens (fluxo principal)
+        Passo 1 e 2:
+            [BACK]/bicicleta/{idBicicleta} - GET [R3](Microsserviço Equipamento)
+        Passo 3:
+            [BACK - /bicicleta/{idBicicleta} - GET]/integrarNaRede - POST [R1](Microsserviço Equipamento)
+        Passo 4 e 5:
+            [BACK - /tranca/{idTranca} - GET]/trancar - POST (Microsserviço Equipamento)
+        Passo 6:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
+    UC08 – Incluir Bicicleta na Rede de Totens (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /bicicleta/{idBicicleta} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+    UC08 – Incluir Bicicleta na Rede de Totens (fluxo de exceção E2)
+        Passo E2.1:
+            [BACK - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E2.2:
+            Fim
+    UC08 – Incluir Bicicleta na Rede de Totens (fluxo de exceção E3)
+        Passo E3.1:
+            UC04, passo 3
+
+
+UC09
+    UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo principal)
+        Passo 1 e 2:
+            [FRONT]/selecionarReparoOuAposentadoria - GET (Microsserviço Equipamento)
+        Passo 3 a 5:
+            [BACK]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+        Passo 6:
+            [BACK - /tranca/{idTranca} - GET]/destrancar - POST (Microsserviço Equipamento)
+        Passo 7 a 9:
+            [BACK - /bicicleta/{idBicicleta} - GET]/retirarDaRede - POST [R1](Microsserviço Equipamento)
+            [BACK - /bicicleta/{idBicicleta} - GET]/status/{acao} - POST (Microsserviço Equipamento)
+        Passo 10:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
+        Passo 11:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+    UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo alternativo A1)
+        Passo A1.1 a A1.3:
+            [BACK]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+        Passo A1.4:
+            [BACK - /tranca/{idTranca} - GET]/destrancar - POST (Microsserviço Equipamento)
+        Passo A1.5 a A1.7:
+            [BACK - /bicicleta/{idBicicleta} - GET]/retirarDaRede - POST [R1](Microsserviço Equipamento)
+            [BACK - /bicicleta/{idBicicleta} - GET]/status/{acao} - POST (Microsserviço Equipamento)
+        Passo A1.8 e A1.9:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
+    UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo alternativo A2)
+        Passo A2.1:
+            [FRONT - /tranca/{idTranca} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo A2.2:
+            Passo 1
+    UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo de exceção E1)
+        Passo E1.1:
+                [FRONT - /tranca/{idTranca} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+                Fim
+    UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo de exceção E2)
+        Passo E2.1:
+                [BACK - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E2.2:
+                Fim
+
+
+UC10
+    UC10 – Manter Cadastro de Bicicletas (fluxo principal)
+        Passo 1 a 3:
+            [FRONT]/bicicleta - GET [R4](Microsserviço Equipamento)
+        Passo 4 a 7:
+            [FRONT]/bicicleta - POST [R1][R2][R5](Microsserviço Equipamento)
+            [BACK]/bicicleta - POST (Microsserviço Equipamento)
+        Passo 8:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC10 – Manter Cadastro de Bicicletas (fluxo alternativo A1)
+        Passo A1.1 a A1.4:
+            [FRONT]/bicicleta - PUT [R2][R3](Microsserviço Equipamento)
+            [BACK]/bicicleta - PUT (Microsserviço Equipamento)
+        Passo A1.5:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC10 – Manter Cadastro de Bicicletas (fluxo alternativo A2)
+        Passo A2.1 a A2.3:
+            [FRONT]/bicicleta/{idBicicleta} - DELETE (Microsserviço Equipamento)
+            [BACK]/bicicleta/{idBicicleta} - DELETE (Microsserviço Equipamento)
+        Passo A2.4:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC10 – Manter Cadastro de Bicicletas (fluxo alternativo A3)
+        Passo A3.1:
+            Passo 1
+    UC10 – Manter Cadastro de Bicicletas (fluxo alternativo A4)
+        Passo A4.1:
+            [FRONT - /bicicleta - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo A4.2:
+            Passo 4
+    UC10 – Manter Cadastro de Bicicletas (fluxo alternativo A5)
+        Passo A5.1:
+            [FRONT]/apresentarErro - POST (Microsserviço Externo)
+        Passo A5.2:
+            Passo A1.1
+
+
+UC11
+    UC11 –  Incluir Tranca em Totem (fluxo principal)
+        Passo 1 e 2:
+            [FRONT]/tranca - GET (Microsserviço Equipamento)
+            [BACK]/tranca - GET [R3](Microsserviço Equipamento)
+        Passo 3:
+            [BACK - /tranca/{idTranca} - GET]/integrarNaRede - POST [R1](Microsserviço Equipamento)
+        Passo 4:
+            [BACK - /tranca/{idTranca} - GET]/status/{acao} - POST (Microsserviço Equipamento)
+        Passo 5:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
+        Passo 6:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+    UC11 –  Incluir Tranca em Totem (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /tranca/{idTranca} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+    UC11 –  Incluir Tranca em Totem (fluxo de exceção E2)
+        Passo E2.1:
+            [FRONT - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E2.2:
+            Fim
+
+
+UC12
+    UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo principal)
+        Passo 1 a 5:
+            [FRONT]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+            [BACK]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+        Passo 6:
+            [BACK - /tranca/{idTranca} - GET]/destrancar - POST (Microsserviço Equipamento)
+        Passo 7 a 9:
+            [BACK - /tranca/{idTranca} - GET]/retirarDaRede - POST [R1](Microsserviço Equipamento)
+            [BACK - /tranca/{idTranca} - GET]/status/{acao} - POST (Microsserviço Equipamento)
+        Passo 10:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
+        Passo 11:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+    UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo alternativo A1)
+        Passo A1.1 a A1.3:
+            [FRONT]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+            [BACK]/tranca/{idTranca} - GET (Microsserviço Equipamento)
+        Passo A1.4:
+            [BACK - /tranca/{idTranca} - GET]/destrancar - POST (Microsserviço Equipamento)
+        Passo A1.5:
+            [BACK - /tranca/{idTranca} - GET]/retirarDaRede - POST (Microsserviço Equipamento)
+        Passo A1.6:
+            [BACK - /tranca/{idTranca} - GET]/status/{acao} - POST (Microsserviço Equipamento)
+        Passo A1.7 e A1.8:
+            [BACK]/enviarEmail - POST [R1][R2](Microsserviço Externo)
+        Passo A1.9:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+    UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo alternativo A2)
+        Passo A2.1:
+            [FRONT - /tranca/{status} - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo A2.2:
+            Passo 1
+    UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo de exceção E1)
+        Passo E1.1:
+            [FRONT - /tranca - GET]/apresentarErro - POST (Microsserviço Externo)
+        Passo E1.2:
+            Fim
+    UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo de exceção E2)
+        Passo E2.1:
+            [FRONT - /enviarEmail - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E2.2:
+            Fim
+
+
+UC13
+    UC13 – Manter Cadastro de Trancas (fluxo principal)
+        Passo 1 a 3:
+            [FRONT]/tranca - GET [R4](Microsserviço Externo)
+        Passo 4 a 7:
+            [FRONT]/tranca - POST [R1][R2][R3](Microsserviço Equipamento)
+            [BACK]/tranca - POST (Microsserviço Equipamento)
+        Passo 8:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC13 – Manter Cadastro de Trancas (fluxo alternativo A1)
+        Passo A1.1 a A1.4:
+            [FRONT]/tranca - PUT [R1][R2][R3](Microsserviço Equipamento)
+            [BACK]/tranca - PUT (Microsserviço Equipamento)
+        Passo A1.5:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC13 – Manter Cadastro de Trancas (fluxo alternativo A2)
+        Passo A2.1 a A2.3:
+            [FRONT]/tranca/{idTranca} - DELETE (Microsserviço Equipamento)
+            [BACK]/tranca/{idTranca} - DELETE (Microsserviço Equipamento)
+        Passo A2.4:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC13 – Manter Cadastro de Trancas (fluxo alternativo A3)
+        Passo A3.1:
+            Passo 1
+    UC13 – Manter Cadastro de Trancas (fluxo alternativo A4)
+        Passo A4.1:
+            [FRONT - /tranca - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo A4.2:
+            Passo 4
+
+
+UC14
+    UC14 – Manter Cadastro de Totens (fluxo principal)
+        Passo 1 a 3:
+            [FRONT]/totem - GET [R3](Microsserviço Equipamento)
+        Passo 4 a 7:
+            [FRONT]/totem - POST [R1][R2](Microsserviço Equipamento)
+            [BACK]/totem - POST (Microsserviço Equipamento)
+        Passo 8:
+            [FRONT]/exibirMensagemDeSucesso - POST (Microsserviço Externo)
+            Passo 1
+    UC14 – Manter Cadastro de Totens (fluxo alternativo A1)
+        Passo A1.1 a A1.3:
+            [FRONT]/totem/{idTotem} - DELETE (Microsserviço Equipamento)
+            [BACK]/totem/{idTotem} - DELETE (Microsserviço Equipamento)
+        Passo A1.4:
+            Passo 1
+    UC14 – Manter Cadastro de Totens (fluxo alternativo A2)
+        Passo A2.1:
+            Passo 1
+    UC14 – Manter Cadastro de Totens (fluxo alternativo A3)
+        Passo A3.1:
+            [FRONT - /totem - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo A3.1:
+            Passo 4
+    UC14 – Manter Cadastro de Totens (fluxo alternativo A4)
+        Passo A4.1:
+            UC 13, passo 1
+    UC14 – Manter Cadastro de Totens (fluxo alternativo A5)
+        Passo A5.1:
+            UC10, passo 1
+
+
+UC15
+    UC15 – Manter Cadastro de Funcionário (fluxo principal)
+        Passo 1:
+            [FRONT]/funcionario - POST [R2][R3](Microsserviço Aluguel)
+        Passo 4 a 6:
+            [FRONT]/funcionario - POST [R2][R3](Microsserviço Aluguel)
+            [BACK]/funcionario - POST (Microsserviço Aluguel)
+        Passo 7:
+            Passo 1
+    UC15 – Manter Cadastro de Funcionário (fluxo alternativo A1)
+        Passo A1.1 a A1.4:
+            [FRONT]/funcionario - POST [R2][R3](Microsserviço Aluguel)
+            [BACK]/funcionario - POST (Microsserviço Aluguel)
+        Passo A1.5:
+            Passo 1
+    UC15 – Manter Cadastro de Funcionário (fluxo alternativo A2)
+        Passo A2.1 a A2.3:
+            [FRONT]/funcionario/{idFuncionario} - DELETE (Microsserviço Aluguel)
+        Passo A2.4:
+            Passo 1
+    UC15 – Manter Cadastro de Funcionário (fluxo alternativo A3)
+        Passo A3.1:
+            Passo 1
+    UC15 – Manter Cadastro de Funcionário (fluxo alternativo A4)
+        Passo E4.1:
+            [FRONT - /funcionario - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E4.2:
+            Passo 4
+    UC15 – Manter Cadastro de Funcionário (fluxo alternativo A5)
+        Passo E5.1:
+            [FRONT - /funcionario - POST]/apresentarErro - POST (Microsserviço Externo)
+        Passo E5.2:
+            Passo A1.1
+
+
+UC16
+    UC16 – Cobrar Taxas Atrasadas (fluxo principal)
+        Passo 1 e 2:
+            [BACK]/cobranca - POST [R1](Microsserviço Externo)
+        Passo 3 e 4:
+            [BACK]/enviarEmail - POST [R2](Microsserviço Externo)
