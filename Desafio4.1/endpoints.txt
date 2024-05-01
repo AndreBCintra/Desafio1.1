@@ -1,8 +1,37 @@
 Notas: 
 - Os três microsserviços (Ciclista, Equipamento e Serviços Externos) possuem integração entre si.
 
+Requisitos Funcionais Cumpridos
 
-UC01
+RF   |   UC  |   UC+  |
+RF1  |  UC01 |        |
+RF2  |  UC02 |        |
+RF3  |  UC03 |        |
+RF4  |  UC04 |        |
+RF5  |  UC04 |        |
+RF6  |  UC03 |        |
+RF7  |  UC03 |        |
+RF8  |  UC04 |        |
+RF9  |  UC04 |        |
+RF10 |  UC16 |        |
+RF11 |  UC06 |  UC07  |
+RF12 |  UC03 |        |
+RF13 |  UC03 |  UC04  |
+RF14 |  UC03 |  UC04  |
+RF15 |  UC04 |        |
+RF16 |  UC10 |        |
+RF17 |  UC08 |        |
+RF18 |  UC09 |        |
+RF19 |  UC13 |        |
+RF20 |  UC11 |        |
+RF21 |  UC12 |        |
+RF22 |  UC14 |        |
+RF23 |  UC15 |        |
+
+
+
+
+UC01 (O caso de uso UC01 cumpre o requisito RF1, cadastrando o usuário e identificando se é estrangeiro ou brasileiro e recebendo os devidos documentos)
     UC01 - Cadastrar Ciclista (fluxo principal)
         Passo 1 e 2:
             [FRONT]/ciclista/existeEmail/{email} - GET (Microsserviço Aluguel)
@@ -42,7 +71,7 @@ UC01
             Fim
 
 
-UC02
+UC02 (O caso de uso UC02 cumpre o requisito RF2 ao confirmar a conta pelo email que ele recebeu ao fazer o cadastro)
     UC02 - Confirmar Email (fluxo principal)
         Passo 1:
             [BACK]/ciclista/{idCiclista} - GET (Microsserviço Aluguel)
@@ -57,7 +86,7 @@ UC02
             Fim
 
 
-UC03
+UC03 (O caso de uso UC02 cumpre o requisito RF3 com permitindo alugar uma bicicleta, o requisito RF6 com a regra R2, o requisito RF7 com o passo 7, o requisito RF12 com a regra R1, o requisito RF13 com a regra R4 e o requisito RF14 com a regra R3)
     UC03 - Alugar bicicleta (fluxo principal)
         Passo 1 a 3:
             [FRONT]/tranca/{idTranca} - GET (Microsserviço Equipamento)
@@ -111,7 +140,7 @@ UC03
             Fim
 
 
-UC04
+UC04 (O caso de uso UC04 cumpre o requisito RF4 ao permitir a devolução da bicicleta, o requisito RF5 ao permitir que o ator coloque a bicicleta em qualquer tranca livre, o requisito RF8 com a regra R1, o requisito RF9 com o fluxo alternativo A2, o requisito R13 com a regra R7, o requisito RF14 com a regra R2 e o requisito RF15 com o fluxo alternativo A3)
     UC04 – Devolver bicicleta (fluxo principal)
         Passo 1 e 2:
             [FRONT]/bicicleta/{idBicicleta} - GET (Microsserviço Equipamento)
@@ -147,7 +176,7 @@ UC04
             Fim
 
 
-UC06
+UC06 (O caso de uso UC06 cumpre o requisito RF11 ao permitir a alteração de dados do usuário)
     UC06 – Alterar Dados do Ciclista (fluxo principal)
         Passo 1 a 3:
             [FRONT]/ciclista/{idCiclista} - PUT [R1][R2](Microsserviço Aluguel)
@@ -171,7 +200,7 @@ UC06
             Fim
 
 
-UC07
+UC07 (O caso de uso UC07 cumpre o requisito RF11 ao permitir que o usuário altere os dados do cartão)
     UC07 – Alterar Cartão (fluxo principal)
         Passo 1 e 2:
             [FRONT]/cartaoDeCredito/{idCiclista} - PUT (Microsserviço Aluguel)
@@ -198,7 +227,7 @@ UC07
             Fim
 
 
-UC08
+UC08 (O caso de uso UC08 cumpre o requisito RF17 ao permitir a inclusão de uma bicicleta em uma rede de tokens qualquer)
     UC08 – Incluir Bicicleta na Rede de Totens (fluxo principal)
         Passo 1 e 2:
             [BACK]/bicicleta/{idBicicleta} - GET [R3](Microsserviço Equipamento)
@@ -223,7 +252,7 @@ UC08
             UC04, passo 3
 
 
-UC09
+UC09 (O caso de uso UC09 cumpre o requisito RF18 ao permitir que bicicletas saiam da rede tokens para reparo ou aposentadoria)
     UC09 – Retirar Bicicleta do Sistema de Totens para Reparo (fluxo principal)
         Passo 1 e 2:
             [FRONT]/selecionarReparoOuAposentadoria - GET (Microsserviço Equipamento)
@@ -265,7 +294,7 @@ UC09
                 Fim
 
 
-UC10
+UC10 (O caso de uso UC10 cumpre o requisito RF16 ao manter um registro das bicicletas)
     UC10 – Manter Cadastro de Bicicletas (fluxo principal)
         Passo 1 a 3:
             [FRONT]/bicicleta - GET [R4](Microsserviço Equipamento)
@@ -304,7 +333,7 @@ UC10
             Passo A1.1
 
 
-UC11
+UC11 (O caso de uso UC11 cumpre o requisito RF20 ao permitir que novas trancas sejam adicionadas a um sistema de tokens qualquer)
     UC11 –  Incluir Tranca em Totem (fluxo principal)
         Passo 1 e 2:
             [FRONT]/tranca - GET (Microsserviço Equipamento)
@@ -329,7 +358,7 @@ UC11
             Fim
 
 
-UC12
+UC12 (O caso de uso UC12 cumpre o requisito RF21 ao permitir a saída de uma tranca de uma rede de tokens para reparo ou aposentadoria)
     UC12 – Retirar Tranca do Sistema de Totens Reparo (fluxo principal)
         Passo 1 a 5:
             [FRONT]/tranca/{idTranca} - GET (Microsserviço Equipamento)
@@ -374,7 +403,7 @@ UC12
             Fim
 
 
-UC13
+UC13 (O caso de uso UC13 cumpre o requisito RF19 ao manter o cadastro de trancas)
     UC13 – Manter Cadastro de Trancas (fluxo principal)
         Passo 1 a 3:
             [FRONT]/tranca - GET [R4](Microsserviço Externo)
@@ -408,7 +437,7 @@ UC13
             Passo 4
 
 
-UC14
+UC14 (O caso de uso UC14 cumpre o requisito RF22 ao manter um cadastro de tokens)
     UC14 – Manter Cadastro de Totens (fluxo principal)
         Passo 1 a 3:
             [FRONT]/totem - GET [R3](Microsserviço Equipamento)
@@ -440,7 +469,7 @@ UC14
             UC10, passo 1
 
 
-UC15
+UC15 (O caso de uso UC15 cumpre o requisito RF23 ao manter o cadastro de funcionários)
     UC15 – Manter Cadastro de Funcionário (fluxo principal)
         Passo 1:
             [FRONT]/funcionario - POST [R2][R3](Microsserviço Aluguel)
@@ -475,7 +504,7 @@ UC15
             Passo A1.1
 
 
-UC16
+UC16 (O caso de uso UC16 cumpre o requisito RF10 ao cobrar taxas que foram colocadas na fila de cobrança por conta de algum erro na devolução)
     UC16 – Cobrar Taxas Atrasadas (fluxo principal)
         Passo 1 e 2:
             [BACK]/cobranca - POST [R1](Microsserviço Externo)
